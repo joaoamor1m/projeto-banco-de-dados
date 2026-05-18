@@ -35,3 +35,19 @@ Chave Primária (Identificador Único): É o "RG" de cada registro. Por exemplo:
 
 Chave Estrangeira (A Ponte de Ligação): É como as tabelas conversam. A tabela central desse sistema é a tb_venda. Nela, não está escrito o nome do produto ou do vendedor. Em vez disso, ela possui as chaves estrangeiras tb_prooduto_cd_produto e tb_vendedor_matricula. Quando o sistema quer saber quem vendeu, ele pega a matrícula registrada na venda, vai até a tabela de Vendedores e "puxa" os dados completos dele. Da mesma forma, a Cidade (tb_cidade) tem uma chave apontando para o Estado (tb_estado_cd_estado), criando um efeito cascata de organização.
 
+# tb_vd
+
+O código desenha a estrutura de um banco de dados para gerenciar uma Videolocadora (ou um sistema de aluguel de mídias/DVDs).
+
+Ele organiza as informações para que o estabelecimento tenha controle sobre o seu acervo e as suas locações, registrando exatamente o seguinte:
+
+Acervo (Catálogo): Quais são os filmes/DVDs disponíveis (tb_titulo_dvd), a qual gênero eles pertencem (Ação, Comédia, etc. em tb_genero) e de qual distribuidora eles vieram (tb_distribuidora).
+
+Clientes: Quem são as pessoas que alugam os filmes, guardando dados pessoais como CPF, nome, data de nascimento, endereço e telefone (tb_cliente).
+
+Aluguéis (Movimentação): O registro principal do negócio (rl_aluguel), que anota o número da locação, a data em que ocorreu, qual cliente alugou e qual filme foi levado.
+
+Chave Primária (Identificador Único): É o código exclusivo de cada item. O cd_titulo garante que um DVD não seja confundido com outro; o cd_genero identifica o gênero; e o nr_aluguel é o número do recibo daquela locação. (Nota técnica: no código do tb_cliente, vários campos como nome e endereço foram marcados acidentalmente como chaves primárias junto com o CPF, o que é um erro comum de modelagem na ferramenta, pois apenas o CPF deveria ser o identificador único).
+
+Chave Estrangeira (A Ponte de Ligação): É o que faz o sistema funcionar como uma teia inteligente. A tabela central de movimentação é a rl_aluguel. Para registrar que o "João" alugou "Matrix", essa tabela não escreve esses nomes. Ela "puxa" o código do título (tb_titulo_dvd_cd_titulo) e os dados do cliente que fez a locação. Assim, se o cliente mudar de telefone ou endereço na tabela de Clientes, a locadora não perde o histórico de aluguéis dele, pois tudo está conectado pelos códigos, e não por textos soltos.
+
